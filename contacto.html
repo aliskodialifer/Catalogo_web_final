@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto - Productos Metálicos San Martín</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>PRODUCTOS METÁLICOS SAN MARTÍN</h1>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="informacion.html">Información</a>
+    </nav>
+</header>
+
+<main>
+<h2>Consulta del Producto</h2>
+
+<form>
+    <label>Nombre completo:</label>
+    <input type="text" id="nombre" placeholder="Ej: Jennifer Raquel" required>
+
+    <label>Teléfono del cliente:</label>
+    <input type="number" id="telefono" placeholder="Ej: 70012345" required>
+
+    <label>Consulta:</label>
+    <textarea id="consulta" rows="4" placeholder="Escribe tu consulta..." required></textarea>
+
+    <button type="button" onclick="enviarWhatsapp()">Enviar por WhatsApp</button>
+</form>
+</main>
+
+<footer>
+    <p>&copy; 2025 Productos Metálicos San Martín. Desarrollado por BTH Sistemas Informáticos.</p>
+</footer>
+
+<script>
+// Función para leer parámetro de la URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Copiar producto automáticamente al textarea
+const productoSeleccionado = getQueryParam("producto");
+if (productoSeleccionado) {
+    document.getElementById("consulta").value =
+        "Consulta sobre el producto: " + decodeURIComponent(productoSeleccionado);
+}
+
+// Función WhatsApp
+function enviarWhatsapp() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const telefonoCliente = document.getElementById("telefono").value.trim();
+    const consulta = document.getElementById("consulta").value.trim();
+
+    if (!nombre || !telefonoCliente || !consulta) {
+        alert("Por favor completa todos los campos.");
+        return;
+    }
+
+    const numeroPropietario = "59161324213";
+    const mensaje =
+        "Nuevo mensaje desde el catálogo:\n\n" +
+        "• Nombre: " + nombre + "\n" +
+        "• Teléfono del cliente: " + telefonoCliente + "\n" +
+        "• Consulta: " + consulta;
+
+    const url = "https://wa.me/" + numeroPropietario + "?text=" + encodeURIComponent(mensaje);
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
